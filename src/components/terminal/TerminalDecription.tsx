@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { div } from "motion/react-client";
 import TextDecryption from "./TextDecryption";
 import { SecurityChecks } from "./SecurityChecks";
+import BiometricScanner from "./BiometricScanner";
 
 interface TerminalDecryptionProps {
   onComplete?: () => void;
@@ -99,6 +100,35 @@ const TerminalDecription = ({ onComplete }: TerminalDecryptionProps) => {
           </AnimatePresence>
 
           {/* phase three */}
+          {phase === "biometric" && (
+            <motion.div
+              key="biometric"
+              initial={{
+                opacity: 0,
+                rotateX: 90,
+              }}
+              animate={{
+                opacity: 1,
+                rotateX: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0,
+                transition: {
+                  duration: 0.3,
+                },
+              }}
+              className="flex flex-col items-center gap-4"
+            >
+              <BiometricScanner />
+              <div className="text-sm text-red-400 font-mono">
+                <TextDecryption
+                  text="VERIFYING BIOMETRIC SIGNATURE..."
+                  speed={40}
+                />
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
