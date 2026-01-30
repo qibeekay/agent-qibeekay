@@ -1,8 +1,10 @@
 import { Terminal } from "lucide-react";
 import { useTerminalSequence } from "../../hooks/useTerminalSequence";
 import { MatrixRain } from "./MatrixRain";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { div } from "motion/react-client";
+import TextDecryption from "./TextDecryption";
+import { SecurityChecks } from "./SecurityChecks";
 
 interface TerminalDecryptionProps {
   onComplete?: () => void;
@@ -57,8 +59,46 @@ const TerminalDecription = ({ onComplete }: TerminalDecryptionProps) => {
         <div className="w-full max-w-2xl flex flex-col items-center gap-8">
           {/* phase 1 boot text */}
           <div className="h-16 flex items-center justify-center">
-            {phase !== "boot" && <div></div>}
+            {phase !== "boot" && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-xl md:text-2xl font-bold tracking-widest text-center"
+              >
+                <TextDecryption
+                  text="INITIATING SECURE HANDSHAKE PROTOCOL..."
+                  speed={30}
+                />
+              </motion.div>
+            )}
           </div>
+
+          {/* phase two */}
+          <AnimatePresence mode="wait">
+            {phase === "security" && (
+              <motion.div
+                key="security"
+                initial={{
+                  opacity: 0,
+                  scale: 0.9,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 1.1,
+                  filter: "blur(10px)",
+                }}
+                className="w-full flex justify-center"
+              >
+                <SecurityChecks />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* phase three */}
         </div>
       </div>
     </div>
