@@ -6,6 +6,7 @@ import { div } from "motion/react-client";
 import TextDecryption from "./TextDecryption";
 import { SecurityChecks } from "./SecurityChecks";
 import BiometricScanner from "./BiometricScanner";
+import { MissionBriefing } from "./MissionBriefing";
 
 interface TerminalDecryptionProps {
   onComplete?: () => void;
@@ -130,6 +131,36 @@ const TerminalDecription = ({ onComplete }: TerminalDecryptionProps) => {
             </motion.div>
           )}
         </div>
+
+        {/* <AnimatePresence mode="wait"> */}
+        {/* phase 4 /5  */}
+        {phase === "briefing" ||
+          (phase === "ready" && (
+            <motion.div
+              key="briefing"
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              className="fixed inset-0 bg-black text-red-600 font-mono overflow-hidden flex flex-col items-center justify-center z-10"
+            >
+              <MissionBriefing onExplode={triggerBreach} />
+            </motion.div>
+          ))}
+        {/* </AnimatePresence> */}
+
+        {/* Final Whiteout/Transition State */}
+        {/* {phase === "complete" && (
+          <div className="fixed inset-0 bg-white z-100 flex items-center justify-center">
+            <span className="text-black font-mono text-xl tracking-widest animate-pulse">
+              LOADING MISSION ENVIRONMENT...
+            </span>
+          </div>
+        )} */}
       </div>
     </div>
   );
