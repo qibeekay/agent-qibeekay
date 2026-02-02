@@ -78,3 +78,67 @@ export const missions = [
     tags: ["Intel", "Surveillance"],
   },
 ];
+
+// utils/constants.js (add these)
+
+export const socialLinks = [
+  {
+    id: "SOC-01",
+    platform: "Encrypted Signal",
+    handle: "instagram/qi_beekay",
+    icon: "Instagram",
+    link: "https://www.instagram.com/qi_beekay/",
+    status: "ENCRYPTED",
+  },
+  {
+    id: "SOC-02",
+    platform: "Secure Channel",
+    handle: "github/qibeekay",
+    icon: "Github",
+    link: "https://github.com/qibeekay",
+    status: "ACTIVE",
+  },
+  {
+    id: "SOC-03",
+    platform: "Cover Identity",
+    handle: "linkedin/in/anugomokwe",
+    icon: "Linkedin",
+    link: "https://www.linkedin.com/in/anugomokwe/",
+    status: "MONITORED",
+  },
+  {
+    id: "SOC-04",
+    platform: "Encrypted Comms",
+    handle: "x.com/qibeekay",
+    icon: "Twitter",
+    link: "https://x.com/qibeekay",
+    status: "SECURE",
+  },
+];
+
+export const contactMethods = [
+  {
+    id: "COM-01",
+    method: "Encrypted Email",
+    details: "secure@operative-mkwe.enc",
+    protocol: "PGP-4096",
+    response: "24-48 HOURS",
+    clearance: "LEVEL 3",
+  },
+  {
+    id: "COM-02",
+    method: "Secure Drop",
+    details: "Location: [REDACTED]",
+    protocol: "DEAD-DROP-7",
+    response: "72 HOURS",
+    clearance: "LEVEL 5",
+  },
+  {
+    id: "COM-03",
+    method: "Burned Phone",
+    details: "+XXX-XXX-XXXX",
+    protocol: "VOICE-SCRAMBLE",
+    response: "IMMEDIATE",
+    clearance: "LEVEL 4",
+  },
+];
