@@ -35,20 +35,24 @@ export const projects = [
 
 export const skills = [
   {
-    name: "Cryptography",
-    level: 95,
+    name: "Software Design (Tactical)",
+    level: 95, // High-level planning/Full-stack
   },
   {
-    name: "Infiltration",
-    level: 90,
+    name: "Frontend Infiltration (React/UX)",
+    level: 98, // Ability to craft seamless interfaces
   },
   {
-    name: "Hand-to-Hand",
-    level: 85,
+    name: "Data Extraction (Backend/SQL)",
+    level: 88, // Handling the "intel" layer
   },
   {
-    name: "Demolitions",
-    level: 80,
+    name: "Bug Neutralization",
+    level: 85, // Replacing "Hand-to-Hand" combat
+  },
+  {
+    name: "Rapid Deployment (DevOps)",
+    level: 82, // Replacing "Demolitions"
   },
 ];
 

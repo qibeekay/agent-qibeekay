@@ -1,9 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import TerminalFooter from "./components/home/TerminalFooter";
 import Admin from "./pages/Admin";
 import { isAuthenticated } from "./api/api";
 import Login from "./pages/Login";
+
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH;
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -19,9 +20,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin-path/login" element={<Login />} />
+          <Route path={`${ADMIN_PATH}/login`} element={<Login />} />
           <Route
-            path="/admin-path/projects"
+            path={`${ADMIN_PATH}/projects`}
             element={
               <ProtectedRoute>
                 <Admin />

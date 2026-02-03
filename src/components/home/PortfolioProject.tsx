@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   ChevronRight,
   Database,
@@ -25,15 +25,121 @@ const PortfolioProject = () => {
     fetchProjects();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="py-24 flex justify-center">
-        <div className="flex items-center gap-3 text-neutral-400">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <span className="font-mono">DECRYPTING PROJECT FILES...</span>
+  // Sort projects by ID with OP-001 first, then numeric order
+  const sortedProjects = useMemo(() => {
+    if (!projects) return [];
+
+    return [...projects].sort((a, b) => {
+      // Extract numeric part from IDs like "OP-001"
+      const getNumericPart = (id: string) => {
+        const match = id.match(/OP-(\d+)/);
+        return match ? parseInt(match[1], 10) : 0;
+      };
+
+      const numA = getNumericPart(a.id);
+      const numB = getNumericPart(b.id);
+
+      return numA - numB;
+    });
+  }, [projects]);
+
+  // Skeleton Loader Component
+  const SkeletonLoader = () => (
+    <div className="pb-24">
+      {/* Header Skeleton */}
+      <div className="flex justify-between items-center mb-8">
+        <div className="h-8 w-64 bg-neutral-800/50 animate-pulse rounded"></div>
+        <div className="h-4 w-32 bg-neutral-800/50 animate-pulse rounded"></div>
+      </div>
+
+      {/* Projects Grid Skeleton */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3, 4, 5, 6].map((item) => (
+          <div
+            key={item}
+            className="relative bg-neutral-900/30 border border-white/5 animate-pulse"
+          >
+            {/* Top shimmer effect */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-neutral-700 to-transparent"></div>
+
+            <div className="p-8 h-full flex flex-col">
+              {/* Icon and Status Skeleton */}
+              <div className="flex justify-between items-start mb-8">
+                <div className="w-12 h-12 bg-neutral-800/50 rounded-sm"></div>
+                <div className="flex flex-col items-end gap-1">
+                  <div className="w-16 h-4 bg-neutral-800/50 rounded"></div>
+                  <div className="w-20 h-6 bg-neutral-800/50 rounded"></div>
+                </div>
+              </div>
+
+              {/* Title Skeleton */}
+              <div className="h-7 w-3/4 bg-neutral-800/50 rounded mb-4"></div>
+
+              {/* Type Skeleton */}
+              <div className="h-4 w-1/3 bg-neutral-800/50 rounded mb-6"></div>
+
+              {/* Description Skeleton */}
+              <div className="space-y-2 mb-8">
+                <div className="h-3 w-full bg-neutral-800/50 rounded"></div>
+                <div className="h-3 w-5/6 bg-neutral-800/50 rounded"></div>
+                <div className="h-3 w-4/6 bg-neutral-800/50 rounded"></div>
+                <div className="h-3 w-3/4 bg-neutral-800/50 rounded"></div>
+              </div>
+
+              {/* Tech Stack Skeleton */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                <div className="h-6 w-16 bg-neutral-800/50 rounded"></div>
+                <div className="h-6 w-20 bg-neutral-800/50 rounded"></div>
+                <div className="h-6 w-14 bg-neutral-800/50 rounded"></div>
+                <div className="h-6 w-18 bg-neutral-800/50 rounded"></div>
+              </div>
+
+              {/* Button Skeleton */}
+              <div className="flex gap-3">
+                <div className="flex-1 h-10 bg-neutral-800/50 rounded"></div>
+                <div className="flex-1 h-10 bg-neutral-800/50 rounded"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Decryption Text with Animation */}
+      <div className="mt-8 flex items-center justify-center gap-3">
+        <div className="relative">
+          <Loader2 className="w-6 h-6 text-neutral-400 animate-spin" />
+          <div className="absolute inset-0 bg-neutral-900/30 blur-sm"></div>
+        </div>
+        <div className="font-mono text-sm text-neutral-500">
+          <span className="inline-block animate-pulse">D</span>
+          <span className="inline-block animate-pulse delay-75">E</span>
+          <span className="inline-block animate-pulse delay-100">C</span>
+          <span className="inline-block animate-pulse delay-150">R</span>
+          <span className="inline-block animate-pulse delay-200">Y</span>
+          <span className="inline-block animate-pulse delay-250">P</span>
+          <span className="inline-block animate-pulse delay-300">T</span>
+          <span className="inline-block animate-pulse delay-350">I</span>
+          <span className="inline-block animate-pulse delay-400">N</span>
+          <span className="inline-block animate-pulse delay-450">G</span>
+          <span className="inline-block"> </span>
+          <span className="inline-block animate-pulse delay-500">P</span>
+          <span className="inline-block animate-pulse delay-550">R</span>
+          <span className="inline-block animate-pulse delay-600">O</span>
+          <span className="inline-block animate-pulse delay-650">J</span>
+          <span className="inline-block animate-pulse delay-700">E</span>
+          <span className="inline-block animate-pulse delay-750">C</span>
+          <span className="inline-block animate-pulse delay-800">T</span>
+          <span className="inline-block animate-pulse delay-850">S</span>
+          <span className="inline-block animate-pulse delay-900">.</span>
+          <span className="inline-block animate-pulse delay-950">.</span>
+          <span className="inline-block animate-pulse delay-1000">.</span>
         </div>
       </div>
-    );
+    </div>
+  );
+
+  if (loading) {
+    return <SkeletonLoader />;
   }
 
   if (error) {
@@ -76,7 +182,7 @@ const PortfolioProject = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => {
+          {sortedProjects.map((project, index) => {
             const IconComponent = iconMap[project.icon] || Database;
 
             return (
@@ -96,7 +202,7 @@ const PortfolioProject = () => {
                 }}
                 className="group relative bg-neutral-900/50 border border-white/10 hover:border-red-600/50 transition-all duration-300 hover:transform hover:-translate-y-1"
               >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-red-600 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
 
                 <div className="p-8 h-full flex flex-col">
                   <div className="flex justify-between items-start mb-8">

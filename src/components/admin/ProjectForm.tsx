@@ -57,12 +57,16 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     setErrors({});
     setLoading(true);
 
+    // Clean the string to ensure no literal brackets or quotes are included
+    const techArray = formData.tech
+      .replace(/[\[\]"]/g, "") // Remove [, ], and "
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t !== "");
+
     const data: CreateProjectData = {
       ...formData,
-      tech: formData.tech
-        .split(",")
-        .map((t) => t.trim())
-        .filter((t) => t),
+      tech: techArray,
     };
 
     const result = await onSubmit(data, image || undefined);

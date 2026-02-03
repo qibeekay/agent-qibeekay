@@ -105,7 +105,7 @@ const AdminLogin = () => {
               disabled={loading}
               className="w-full bg-red-600 hover:bg-red-700 text-white py-3 font-bold tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[size:250%_250%] animate-[shimmer_2s_linear_infinite]" />
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-size-[250%_250%] animate-[shimmer_2s_linear_infinite]" />
               <span className="relative flex items-center justify-center gap-2">
                 {loading ? (
                   <>

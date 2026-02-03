@@ -1,15 +1,21 @@
-import React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { missions, skills } from "../../utils/contants";
 import { Briefcase, Shield, Target } from "lucide-react";
 import Redacted from "./Redacted";
 import img from "../../assets/img.jpeg";
+import { useProjects } from "../../hooks/useProjects";
+import { useEffect } from "react";
 
 interface ModalProps {
   onClose: () => void;
 }
 
 const AgentResume = ({ onClose }: ModalProps) => {
+  const { projects, loading, error, fetchProjects } = useProjects();
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
   const backdropVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
@@ -168,35 +174,32 @@ const AgentResume = ({ onClose }: ModalProps) => {
                     <Shield className="w-4 h-4" /> Background Check
                   </h3>
                   <div className="font-mono text-sm leading-relaxed text-[#333] space-y-4">
-                    <p>
-                      Subject was recruited in <Redacted>Hello</Redacted>{" "}
-                      following the <Redacted>Zurich Incident</Redacted>.
-                      Demonstrated exceptional aptitude for{" "}
-                      <Redacted>cyber warfare</Redacted> and tactical
-                      infiltration.
-                    </p>
-                    <p>
-                      Former affiliation with{" "}
-                      <span className="bg-black text-black px-1">
-                        MI6 Special Branch
-                      </span>{" "}
-                      confirmed. Records indicate involvement in{" "}
-                      <span className="bg-black text-black px-1">
-                        Operation Blackbriar
-                      </span>{" "}
-                      resulting in the dismantling of
-                      <span className="bg-black text-black px-1">
-                        The Syndicate's European cell
-                      </span>
-                      .
-                    </p>
-                    <p>
-                      Current psychological evaluation:{" "}
-                      <span className="font-bold text-[#C41E3A]">
-                        AVAILABLE FOR HIRE
-                      </span>
-                      . Recommended for high-risk autonomous deployment.
-                    </p>
+                    <div className="font-mono text-sm leading-relaxed text-[#333] space-y-4">
+                      <p>
+                        Subject <strong>ANUGO MOKWE</strong> operates as a
+                        primary architect in Frontend and
+                        <Redacted>Backend </Redacted> Synchronicity. High
+                        proficiency in React-based tactical interfaces and PHP
+                        server-side intelligence.
+                      </p>
+                      <p>
+                        Intelligence suggests involvement in the dismantling of
+                        <span className="bg-black text-black px-1">
+                          Technical Debt Syndicates
+                        </span>
+                        . Field reports confirm Subject specializes in{" "}
+                        <Redacted>Clean Code Protocol</Redacted>
+                        and architectural integrity.
+                      </p>
+                      <p>
+                        Status:{" "}
+                        <span className="font-bold text-[#C41E3A]">
+                          DEPLOYMENT READY
+                        </span>
+                        . Clearance level grants access to all repositories and
+                        root-level administrative functions.
+                      </p>
+                    </div>
                   </div>
                 </section>
 
@@ -207,7 +210,7 @@ const AgentResume = ({ onClose }: ModalProps) => {
                   </h3>
 
                   <div className="grid grid-cols-1 gap-6">
-                    {missions.map((mission, idx) => (
+                    {projects.slice(0, 3).map((mission, idx) => (
                       <motion.div
                         key={mission.id}
                         className="bg-white p-6 shadow-md border-l-4 border-[#3D2817] relative group cursor-pointer"
@@ -231,19 +234,16 @@ const AgentResume = ({ onClose }: ModalProps) => {
                           <h4 className="font-bold text-lg font-serif">
                             {mission.title}
                           </h4>
-                          <span className="font-mono text-xs text-gray-500">
-                            {mission.date}
-                          </span>
                         </div>
                         <div className="font-mono text-xs text-[#C41E3A] mb-3">
-                          {mission.id} // {mission.status}
+                          {mission.id} // {mission.status.toUpperCase()}
                         </div>
 
                         <p className="text-sm text-gray-700 mb-4 font-mono">
-                          {mission.desc}
+                          {mission.description}
                         </p>
                         <div className="flex gap-2">
-                          {mission.tags.map((tag) => (
+                          {mission.tech.map((tag) => (
                             <span
                               key={tag}
                               className="text-[10px] uppercase tracking-wider bg-gray-100 px-2 py-1 text-gray-600 rounded"
