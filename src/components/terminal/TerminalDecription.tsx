@@ -2,7 +2,6 @@ import { Terminal } from "lucide-react";
 import { useTerminalSequence } from "../../hooks/useTerminalSequence";
 import { MatrixRain } from "./MatrixRain";
 import { AnimatePresence, motion } from "motion/react";
-import { div } from "motion/react-client";
 import TextDecryption from "./TextDecryption";
 import { SecurityChecks } from "./SecurityChecks";
 import BiometricScanner from "./BiometricScanner";
@@ -11,6 +10,7 @@ import { MissionBriefing } from "./MissionBriefing";
 interface TerminalDecryptionProps {
   onComplete?: () => void;
 }
+
 const TerminalDecription = ({ onComplete }: TerminalDecryptionProps) => {
   const { phase, triggerBreach } = useTerminalSequence(onComplete);
 
